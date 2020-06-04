@@ -90,6 +90,7 @@ public class ProductService {
         product.setBrand(rs.getString("brand"));
         product.setName(rs.getString("name"));
         product.setSeries(rs.getString("series"));
+        product.setDisplayName(rs.getString("displayName"));
         product.setCategory(rs.getString("category"));
         product.setPrice(rs.getDouble("price"));
         product.setDescription(rs.getString("description"));
