@@ -102,6 +102,52 @@ public class ProductService {
         return null;
     }
 
+    public static ProductListResponse getSearchedProducts(String query) {
+        ProductListResponse response = new ProductListResponse();
+
+        try(Connection conn = Database.dbConnect();
+            PreparedStatement stmtCPU = conn.prepareStatement("SELECT * FROM product JOIN product_cpu ON id=product_id " +
+                    "WHERE displayName LIKE ? " +
+                    "OR model LIKE ? ");
+            PreparedStatement stmtRAM = conn.prepareStatement("SELECT * FROM product JOIN product_ram ON id=product_id " +
+                    "WHERE displayName LIKE ? " +
+                    "OR model LIKE ? ");
+            PreparedStatement stmtVC = conn.prepareStatement("SELECT * FROM product JOIN product_video_card ON id=product_id " +
+                    "WHERE displayName LIKE ? " +
+                    "OR model LIKE ? ");) {
+
+            String key = "%" + query + "%";
+            stmtCPU.setString(1, key);
+            stmtCPU.setString(2, key);
+            stmtRAM.setString(1, key);
+            stmtRAM.setString(2, key);
+            stmtVC.setString(1, key);
+            stmtVC.setString(2, key);
+
+            try(ResultSet rsCPU = stmtCPU.executeQuery();
+                ResultSet rsRAM = stmtRAM.executeQuery();
+                ResultSet rsVC = stmtVC.executeQuery();) {
+
+                while (rsCPU.next()) {
+                    response.addProductCPU(createProductCPU(rsCPU));
+                }
+                while (rsRAM.next()) {
+                    response.addProductRAM(createProductRAM(rsRAM));
+                }
+                while (rsVC.next()) {
+                    response.addProductVC(createProductVC(rsVC));
+                }
+
+                return response;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private static ProductCPU createProductCPU(ResultSet rs) throws SQLException {
         ProductCPU productCPU = new ProductCPU(createProduct(rs));
         productCPU.setProcessorsType(rs.getString("processorsType"));

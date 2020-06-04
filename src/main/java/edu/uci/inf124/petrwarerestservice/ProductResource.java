@@ -41,4 +41,17 @@ public class ProductResource {
         }
     }
 
+    @Path("/search")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getSearchedProducts(@QueryParam("query") String query) {
+        ProductListResponse response = ProductService.getSearchedProducts(query);
+
+        if (response == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(response).build();
+    }
+
 }
