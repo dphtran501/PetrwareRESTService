@@ -9,23 +9,19 @@ import edu.uci.inf124.petrwarerestservice.model.ProductVC;
 import edu.uci.inf124.petrwarerestservice.response.ProductListResponse;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProductService {
 
-    private static final String SELECT_ALL_PRODUCTS = "SELECT * FROM product";
-    private static final String JOIN_PRODUCT_CPU = " JOIN product_cpu ON id=product_id";
-    private static final String JOIN_PRODUCT_RAM = " JOIN product_ram ON id=product_id";
-    private static final String JOIN_PRODUCT_VIDEO_CARD = " JOIN product_video_card ON id=product_id";
-
     public static ProductListResponse getAllProducts() {
         ProductListResponse response = new ProductListResponse();
 
         try(Connection conn = Database.dbConnect();
-            ResultSet rsProductCPU = DatabaseUtils.getQueryResults(conn, SELECT_ALL_PRODUCTS + JOIN_PRODUCT_CPU);
-            ResultSet rsProductRAM = DatabaseUtils.getQueryResults(conn, SELECT_ALL_PRODUCTS + JOIN_PRODUCT_RAM);
-            ResultSet rsProductVC = DatabaseUtils.getQueryResults(conn, SELECT_ALL_PRODUCTS + JOIN_PRODUCT_VIDEO_CARD);) {
+            ResultSet rsProductCPU = DatabaseUtils.getQueryResults(conn, "SELECT * FROM product JOIN product_cpu ON id=product_id");
+            ResultSet rsProductRAM = DatabaseUtils.getQueryResults(conn, "SELECT * FROM product JOIN product_ram ON id=product_id");
+            ResultSet rsProductVC = DatabaseUtils.getQueryResults(conn, "SELECT * FROM product JOIN product_video_card ON id=product_id");) {
 
             if (rsProductCPU != null && rsProductRAM != null && rsProductVC != null) {
                 while (rsProductCPU.next()) {
@@ -40,6 +36,65 @@ public class ProductService {
 
                 return response;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ProductListResponse getProduct(int id) {
+        ProductListResponse response = new ProductListResponse();
+
+        try (Connection conn = Database.dbConnect();
+             PreparedStatement stmtSelectCat = conn.prepareStatement("SELECT category FROM product WHERE id=?");) {
+
+            // Get category of product to use correct category table
+            stmtSelectCat.setInt(1, id);
+            try(ResultSet rsCat = stmtSelectCat.executeQuery();) {
+                String category = "";
+                if (rsCat.next()) {
+                    category = rsCat.getString("category");
+                }
+                String categoryTable = "";
+                switch (category) {
+                    case "cpu":
+                        categoryTable = "product_cpu";
+                        break;
+                    case "ram":
+                        categoryTable = "product_ram";
+                        break;
+                    case "videoCard":
+                        categoryTable = "product_video_card";
+                }
+
+                // Get product if category exists
+                if (!categoryTable.isEmpty()) {
+                    String sql = String.format("SELECT * FROM product JOIN %s ON id=product_id WHERE product.id=?",
+                            categoryTable);
+                    try(PreparedStatement stmtSelectProduct = conn.prepareStatement(sql);) {
+                        stmtSelectProduct.setInt(1, id);
+                        try(ResultSet rs = stmtSelectProduct.executeQuery();) {
+                            if (rs.next()) {
+                                String rsCategory = rs.getString("category");
+                                switch (rsCategory) {
+                                    case "cpu":
+                                        response.addProductCPU(createProductCPU(rs));
+                                        break;
+                                    case "ram":
+                                        response.addProductRAM(createProductRAM(rs));
+                                        break;
+                                    case "videoCard":
+                                        response.addProductVC(createProductVC(rs));
+                                }
+
+                                return response;
+                            }
+                        }
+                    }
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

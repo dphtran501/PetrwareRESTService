@@ -22,4 +22,23 @@ public class ProductResource {
         return Response.ok(response).build();
     }
 
+    @Path("{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getProduct(@PathParam("id") int id) {
+        ProductListResponse response = ProductService.getProduct(id);
+
+        if(response == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else if (response.getProductCPUList().size() > 0) {
+            return Response.ok(response.getProductCPUList().get(0)).build();
+        } else if (response.getProductRAMList().size() > 0) {
+            return Response.ok(response.getProductRAMList().get(0)).build();
+        } else if (response.getProductVCList().size() > 0) {
+            return Response.ok(response.getProductVCList().get(0)).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 }
