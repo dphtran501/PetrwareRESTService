@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="PetrwareRESTService:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/PetrwareRESTService_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="PetrwareRESTService/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="PetrwareRESTService" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="JAX-RS-2.1.1" />
+          <element id="library" level="project" name="Maven: com.eclipsesource.jaxrs:jersey-all:2.22.2" />
+          <element id="library" level="project" name="Maven: org.mariadb.jdbc:mariadb-java-client:2.6.0" />
+          <element id="library" level="project" name="Maven: javax.activation:javax.activation-api:1.2.0" />
+          <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.3.1" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
