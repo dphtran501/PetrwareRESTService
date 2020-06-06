@@ -16,4 +16,14 @@ public class DatabaseUtils {
 
         return null;
     }
+
+    public static int updateRecords(Connection conn, final String sql) {
+        try (Statement stmt = conn.createStatement();) {
+            return stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1; // -1 means issue with running method
+    }
 }
