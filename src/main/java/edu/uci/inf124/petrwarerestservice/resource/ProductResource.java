@@ -1,4 +1,4 @@
-package edu.uci.inf124.petrwarerestservice;
+package edu.uci.inf124.petrwarerestservice.resource;
 
 import edu.uci.inf124.petrwarerestservice.response.ProductListResponse;
 import edu.uci.inf124.petrwarerestservice.service.ProductService;

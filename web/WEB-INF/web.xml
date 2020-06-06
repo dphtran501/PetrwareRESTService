@@ -10,7 +10,7 @@
         <init-param>
             <!-- Specify the package where your Resource class is located-->
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>edu.uci.inf124.petrwarerestservice</param-value>
+            <param-value>edu.uci.inf124.petrwarerestservice.resource</param-value>
         </init-param>
         <!--Optional; if >=0 it indicates order for servlets to be loaded, higher numbers loaded after lower numbers-->
         <load-on-startup>1</load-on-startup>
