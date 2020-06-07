@@ -10,6 +10,19 @@ import javax.ws.rs.core.Response;
 @Path("/customers")
 public class CustomerResource {
 
+    @Path("{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getCustomer(@PathParam("id") int id) {
+        Customer customer = CustomerService.getCustomer(id);
+
+        if(customer == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            return Response.ok(customer).build();
+        }
+    }
+
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public Response postCustomer() {
@@ -19,6 +32,16 @@ public class CustomerResource {
         } else {
             Customer customer = new Customer(customerID);
             return Response.ok(customer).build();
+        }
+    }
+
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response putCustomer(Customer customer) {
+        if (CustomerService.updateCustomer(customer)) {
+            return Response.ok().entity("Customer updated successfully").build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 }
