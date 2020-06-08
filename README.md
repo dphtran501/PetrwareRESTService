@@ -25,10 +25,12 @@ public class Credentials {
 
 - [x] **Create REST services to allow for interaction with the order and product resources stored in your application 
 database.
+
+    The REST service is created using the Jersey REST framework. The REST services communicate mainly in JSON, though some services may produce TEXT/PLAIN responses. The implemented RESTful service methods are as follows:
   
-    - [`getAllProducts()`](https://github.com/dphtran501/PetrwareRESTService/blob/ecc785bc2cbc62549e23e5ea5bcc400d14632855/src/main/java/edu/uci/inf124/petrwarerestservice/resource/ProductResource.java#L15)
+    - `getAllProducts()`
       - GET
-      - Request URL: <SERVER_URL>/v1/api/products
+      - Request URL: {SERVER_URL}/v1/api/products
       - Sample Response:
         ```json
         {
@@ -42,7 +44,7 @@ database.
                 "displayName": "Intel Core i9-9900K",
                 "category": "cpu",
                 "price": 504.99,
-                "description": "Introducing the NEW 9th Gen Intel Core desktop processors the first unlocked mainstream desktop processor. When paired with Intel Optane memory, accelerates the loading and launching of the games you play. With up to 5GHz and 16-way multitasking, take your creativity to the next level with the power you need to create, edit, and share.",
+                "description": "Introducing the NEW 9th Gen Intel Core desktop processors ...",
                 "imgSrc": "core_i9-9900K.png",
                 "processorsType": "Desktop",
                 "socketType": "LGA 1151 (300 series)",
@@ -58,32 +60,178 @@ database.
             "productVCList": [...]
         }
         ```
-  
-    **Ensure that proper REST principles and conventions are followed while creating your REST services. For example: A 
-    GET method should be used only for retrieving an existing resource, A POST method should be used for creating a new 
-    resource, etc. Do not forget to perform validation for certain methods. For instance, when implementing methods like
-     GET, PUT and DELETE to interact with existing resources, you will need to verify if the resource being queried 
-     actually exists. If the resource is not found. You will need to throw a 404 - Not Found response.**
-  
-    **You are required to create your new REST service application in Java. It is mandatory that you use the Jersey REST 
-    framework.  For the scope of this assignment, it is sufficient that your REST services communicate in JSON. (You are 
-    free to implement support for other media types, but you will have to make sure that your e-commerce web application 
-    communicates successfully with the REST service.)**
+        
+    - `getProduct(int id)`
+      - GET
+      - Request URL: {SERVER_URL}/v1/api/products/{ID}
+      - Sample Response (if ID is 3):
+        ```json
+        {
+            "id": 3,
+            "model": "100-100000163WOF",
+            "brand": "AMD",
+            "name": "Ryzen Threadripper 3990X",
+            "series": "Ryzen Threadripper 3rd Gen",
+            "displayName": "AMD Ryzen Threadripper 3990X",
+            "category": "cpu",
+            "price": 4063.31,
+            "description": "Announced at CES 2020, AMD's 3990X Threadripper processor ...",
+            "imgSrc": "ryzen_threadripper_3990x.png",
+            "processorsType": "Desktop",
+            "socketType": "Socket sTRX4",
+            "coreName": null,
+            "numOfCores": 64,
+            "numOfThreads": 128,
+            "operatingFrequency": 2.9,
+            "maxTurboFrequency": 4.3
+        }
+        ```
+        
+    - `getSearchProducts(String query)`
+      - GET
+      - Request URL: {SERVER_URL}/v1/api/products/search?query={QUERY}
+      - Sample Response (if QUERY is CORSAIR):
+        ```json
+        {
+            "productCPUList": [],
+            "productRAMList": [
+                {
+                    "id": 4,
+                    "model": "CMW16GX4M2C3200C16",
+                    "brand": "CORSAIR",
+                    "name": null,
+                    "series": "Vengeance RGB Pro",
+                    "displayName": "CORSAIR Vengeance RGB Pro",
+                    "category": "ram",
+                    "price": 99.99,
+                    "description": "CORSAIR VENGEANCE RGB PRO Series DDR4 memory lights up your PC ...",
+                    "imgSrc": "vengeance_rgb_pro.png",
+                    "capacity": "16GB (2 x 8GB)",
+                    "speed": "DDR4 3200 (PC4 25600)",
+                    "latency": 16,
+                    "timing": "16-18-18-36",
+                    "color": "Black",
+                    "colorLED": "RGB"
+                }
+            ],
+            "productVCList": []
+        }
+        ```
+        
+    - `getCustomer(int id)`
+      - GET
+      - Request URL: {SERVER_URL}/v1/api/customers/{ID}
+      - Sample Response (if ID is 98):
+        ```json
+        {
+            "id": 98,
+            "firstName": "Gucci",
+            "lastName": "Rich",
+            "phone": "777-123-4567",
+            "country": "Canada",
+            "streetAddress": "777 Gucci Circle",
+            "city": "Beverly Hills",
+            "state": "CA",
+            "zipcode": "90210",
+            "shipping": "7 Day Shipping",
+            "email": "rich@gucci.com"
+        }
+        ```
+        
+    - `postCustomer()`
+      - POST
+      - Request URL: {SERVER_URL}/v1/api/customers
+      - Sample Response:
+        ```json
+        {
+            "id": 101,
+            "firstName": null,
+            "lastName": null,
+            "phone": null,
+            "country": null,
+            "streetAddress": null,
+            "city": null,
+            "state": null,
+            "zipcode": null,
+            "shipping": null,
+            "email": null
+        }
+        ```
+        
+    - `putCustomer(Customer customer)`
+      - PUT
+      - Request URL: {SERVER_URL}/v1/api/customers
+      - Sample Response:
+        `Customer updated successfully`
+      - Sample Request Body:
+        ```json
+        {
+            "id": 101,
+            "firstName": "Test",
+            "lastName": "TestLast",
+            "phone": "1111111111",
+            "country": "United States",
+            "streetAddress": "111 1st Ave",
+            "city": "Tustin",
+            "state": "CA",
+            "zipcode": "92780",
+            "shipping": "Anteater Express",
+            "email": "test@uci.edu"
+        }
+        ```
+        
+    - `getCreditCard(int id)`
+      - GET
+      - Request URL: {SERVER_URL}/v1/api/creditcards/{ID}
+      - Sample Response (if ID is 98):
+        ```json
+        {
+            "id": 98,
+            "cardNumber": "7777777777777",
+            "expiration": "9/2020",
+            "securityCode": "007"
+        }
+        ```
+        
+    - `postCreditCard(CreditCard card)`
+      - POST
+      - Request URL: {SERVER_URL}/v1/api/creditcards
+      - Sample Response:
+        `Credit card added successfully`
+      - Sample Request Body:
+        ```json
+        {
+            "id": 101,
+            "cardNumber": "12345678912340",
+            "expiration": "01/2021",
+            "securityCode": "123"
+        }
+        ```
+        
+    - `getZipcodeData(String zipcode)`
+      - GET
+      - Request URL: {SERVER_URL}/v1/api/checkout/zipcode?zipcode={ZIPCODE}
+      - Sample Response (if ZIPCODE is 10003):
+        ```json
+        {
+            "zipcode": "10003",
+            "city": "New York",
+            "state": "NY",
+            "combinedRate": 0.08875
+        }
+        ```
     
-- [ ] **You will now need to replace all the database interactions in your web application with REST calls. Your web 
+- [x] **You will now need to replace all the database interactions in your web application with REST calls. Your web 
 application will now act as a REST client and retrieve the MySQL data indirectly through the new RESTful web service. 
-That is, you will have two applications: (1) a backend application that provides RESTful APIs that essentially exposes 
-the available operations in your database, and (2) an application that is the client of the RESTful APIs, generates the 
-HTML pages, and handles requests from the user.  While in this assignment you are developing both applications yourself, 
-in practice, each application may be developed by a separate company. For example, companies such as Google, Amazon, and 
-PayPal may develop the RESTful APIs that allow others to leverage their services in building their web applications.** 
+That is, you will have two applications:** 
 
-    **In the readme file, provide proper documentation highlighting the details for each RESTful service method that you 
-implement. Your documentation should include the following at the very least**
-    - **Method Type**
-    - **Request URL**
-    - **Sample Response**
-    - **Sample Request (if applicable)**
+    **(1) a backend application that provides RESTful APIs that essentially exposes the available operations in your database**
+    
+    PetrwareRESTService is the backend application providing RESTful APIs.
+    
+    **(2) an application that is the client of the RESTful APIs, generates the HTML pages, and handles requests from the user.**
+    
+    [PetrwareRESTClient](https://github.com/dphtran501/inf124-project1) is the client of PetrwareRESTService.
 
 ## Authors
 Group 21: Jevford Barro (72114221), Peter Tang (45193375), Derek Tran (18491795)
