@@ -19,12 +19,12 @@ public class Credentials {
 
 ## Requirements Checklist
 
-- [ ] **Using JSP reimplement the product list page. This is the page that contains the list of your products.**
+- [x] **Using JSP reimplement the product list page. This is the page that contains the list of your products.**
 
   Refer to the [Petrware](https://github.com/dphtran501/inf124-project1) web client for this requirement.
 
 - [x] **Create REST services to allow for interaction with the order and product resources stored in your application 
-database.
+database.**
 
     The REST service is created using the Jersey REST framework. The REST services communicate mainly in JSON, though some services may produce TEXT/PLAIN responses. The implemented RESTful service methods are as follows:
   
@@ -240,4 +240,4 @@ Group 21: Jevford Barro (72114221), Peter Tang (45193375), Derek Tran (18491795)
 - [x] [PA 1: Building a dynamic website using HTML, JavaScript, and CSS](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa1.md)
 - [x] [PA 2: Building a web application using PHP, Ajax, and MySQL](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa2.md) 
 - [X] [PA 3: Building a web application using Java Servlets](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa3.md)
-- [ ] PA 4: Building a web application using JSP and RESTful web services 
+- [x] PA 4: Building a web application using JSP and RESTful web services 
