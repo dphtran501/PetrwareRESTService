@@ -105,41 +105,33 @@ public class ProductService {
     public static ProductListResponse getSearchedProducts(String query) {
         ProductListResponse response = new ProductListResponse();
 
+        String sqlCPU = "SELECT * FROM product JOIN product_cpu ON id=product_id " +
+                "WHERE displayName LIKE ? " +
+                "OR model LIKE ? ";
+        String sqlRAM = "SELECT * FROM product JOIN product_ram ON id=product_id " +
+                "WHERE displayName LIKE ? " +
+                "OR model LIKE ? ";
+        String sqlVC = "SELECT * FROM product JOIN product_video_card ON id=product_id " +
+                "WHERE displayName LIKE ? " +
+                "OR model LIKE ? ";
+        String key = "%" + query + "%";
+
         try(Connection conn = Database.dbConnect();
-            PreparedStatement stmtCPU = conn.prepareStatement("SELECT * FROM product JOIN product_cpu ON id=product_id " +
-                    "WHERE displayName LIKE ? " +
-                    "OR model LIKE ? ");
-            PreparedStatement stmtRAM = conn.prepareStatement("SELECT * FROM product JOIN product_ram ON id=product_id " +
-                    "WHERE displayName LIKE ? " +
-                    "OR model LIKE ? ");
-            PreparedStatement stmtVC = conn.prepareStatement("SELECT * FROM product JOIN product_video_card ON id=product_id " +
-                    "WHERE displayName LIKE ? " +
-                    "OR model LIKE ? ");) {
+            ResultSet rsCPU = DatabaseUtils.getQueryResultsPrepared(conn, sqlCPU, key, key);
+            ResultSet rsRAM = DatabaseUtils.getQueryResultsPrepared(conn, sqlRAM, key, key);
+            ResultSet rsVC = DatabaseUtils.getQueryResultsPrepared(conn, sqlVC, key, key)) {
 
-            String key = "%" + query + "%";
-            stmtCPU.setString(1, key);
-            stmtCPU.setString(2, key);
-            stmtRAM.setString(1, key);
-            stmtRAM.setString(2, key);
-            stmtVC.setString(1, key);
-            stmtVC.setString(2, key);
-
-            try(ResultSet rsCPU = stmtCPU.executeQuery();
-                ResultSet rsRAM = stmtRAM.executeQuery();
-                ResultSet rsVC = stmtVC.executeQuery();) {
-
-                while (rsCPU.next()) {
-                    response.addProductCPU(createProductCPU(rsCPU));
-                }
-                while (rsRAM.next()) {
-                    response.addProductRAM(createProductRAM(rsRAM));
-                }
-                while (rsVC.next()) {
-                    response.addProductVC(createProductVC(rsVC));
-                }
-
-                return response;
+            while (rsCPU.next()) {
+                response.addProductCPU(createProductCPU(rsCPU));
             }
+            while (rsRAM.next()) {
+                response.addProductRAM(createProductRAM(rsRAM));
+            }
+            while (rsVC.next()) {
+                response.addProductVC(createProductVC(rsVC));
+            }
+
+            return response;
 
         } catch (SQLException e) {
             e.printStackTrace();
