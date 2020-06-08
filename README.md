@@ -34,27 +34,27 @@ database.
       - Sample Response:
         ```json
         {
-          "productCPUList": [
-            {
-                "id": 1,
-                "model": "BX80684I99900K",
-                "brand": "Intel",
-                "name": "Core i9-9900K",
-                "series": "Core i9 9th Gen",
-                "displayName": "Intel Core i9-9900K",
-                "category": "cpu",
-                "price": 504.99,
-                "description": "Introducing the NEW 9th Gen Intel Core desktop processors ...",
-                "imgSrc": "core_i9-9900K.png",
-                "processorsType": "Desktop",
-                "socketType": "LGA 1151 (300 series)",
-                "coreName": "Coffee Lake",
-                "numOfCores": 8,
-                "numOfThreads": 16,
-                "operatingFrequency": 3.6,
-                "maxTurboFrequency": 5.0
-            },
-            ...
+            "productCPUList": [
+                {
+                    "id": 1,
+                    "model": "BX80684I99900K",
+                    "brand": "Intel",
+                    "name": "Core i9-9900K",
+                    "series": "Core i9 9th Gen",
+                    "displayName": "Intel Core i9-9900K",
+                    "category": "cpu",
+                    "price": 504.99,
+                    "description": "Introducing the NEW 9th Gen Intel Core desktop processors ...",
+                    "imgSrc": "core_i9-9900K.png",
+                    "processorsType": "Desktop",
+                    "socketType": "LGA 1151 (300 series)",
+                    "coreName": "Coffee Lake",
+                    "numOfCores": 8,
+                    "numOfThreads": 16,
+                    "operatingFrequency": 3.6,
+                    "maxTurboFrequency": 5.0
+                },
+                ...
             ],
             "productRAMList": [...],
             "productVCList": [...]
