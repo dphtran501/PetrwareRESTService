@@ -1,5 +1,5 @@
 # PetrwareRESTService
-RESTful web service for the [Petrware](https://github.com/dphtran501/inf124-project1) e-commerce site.
+RESTful web service for the [Petrware](https://github.com/dphtran501/PetrwareRESTClient) e-commerce site.
 
 ## Installation 
 
@@ -21,7 +21,7 @@ public class Credentials {
 
 - [x] **Using JSP reimplement the product list page. This is the page that contains the list of your products.**
 
-  Refer to the [Petrware](https://github.com/dphtran501/inf124-project1) web client for this requirement.
+  Refer to the [Petrware](https://github.com/dphtran501/PetrwareRESTClient) web client for this requirement.
 
 - [x] **Create REST services to allow for interaction with the order and product resources stored in your application 
 database.**
@@ -231,13 +231,7 @@ That is, you will have two applications:**
     
     **(2) an application that is the client of the RESTful APIs, generates the HTML pages, and handles requests from the user.**
     
-    [PetrwareRESTClient](https://github.com/dphtran501/inf124-project1) is the client of PetrwareRESTService.
+    [PetrwareRESTClient](https://github.com/dphtran501/PetrwareRESTClient) is the client of PetrwareRESTService.
 
 ## Authors
 Group 21: Jevford Barro (72114221), Peter Tang (45193375), Derek Tran (18491795)
-
-## Project Status
-- [x] [PA 1: Building a dynamic website using HTML, JavaScript, and CSS](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa1.md)
-- [x] [PA 2: Building a web application using PHP, Ajax, and MySQL](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa2.md) 
-- [X] [PA 3: Building a web application using Java Servlets](https://github.com/dphtran501/inf124-project1/blob/master/docs/pa3.md)
-- [x] PA 4: Building a web application using JSP and RESTful web services 
